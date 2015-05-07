@@ -59,10 +59,6 @@ Node solved = {
 	12, 13, 14, 15
 };
 
-void IterativeDFS()
-{
-
-}
 
 inline bool FieldExists(byte2 position)
 {
@@ -92,6 +88,62 @@ inline byte2 CalculateWhitePosition(const Node* node)
 		}
 	}
 }
+
+void IterativeDFS()
+{
+	std::stack<Node*> stack;
+	stack.push(&graph);
+	unsigned int depth = 0u;
+
+	byte2 zero_position;
+
+	while (!stack.empty())
+	{
+		Node* current = stack.top();
+		stack.pop();
+		if (*current == solved)
+		{
+			printf("DFS: %i\n", depth);
+			break;
+		}
+		else
+			++depth;
+
+		zero_position = CalculateWhitePosition(current);
+		if (std::find(visitedNodes.begin(), visitedNodes.end(), *current) == visitedNodes.end())
+		{
+			visitedNodes.push_back(*current);
+
+			byte2 test_position;
+
+			test_position = zero_position;
+			++test_position.x;
+			if (FieldExists(test_position))
+				stack.push(MoveZeroFromTo(test_position, current));
+
+			test_position = zero_position;
+			++test_position.y;
+			if (FieldExists(test_position))
+				stack.push(MoveZeroFromTo(test_position, current));
+
+			test_position = zero_position;
+			--test_position.y;
+			if (FieldExists(test_position))
+				stack.push(MoveZeroFromTo(test_position, current));
+
+			test_position = zero_position;
+			--test_position.x;
+			if (FieldExists(test_position))
+				stack.push(MoveZeroFromTo(test_position, current));
+
+		}
+		else
+		{
+			printf("hit\n");
+		}
+	}
+}
+
 void IterativeBFS()
 {
 	std::queue<Node*> queue;
@@ -165,7 +217,7 @@ void IterativeBFS()
 	printf("%i\n", depth);
 }
 
-void RandomRoot(int difficultLevel)
+void RandomRoot( const int& const difficultLevel)
 {
 	int x = 0,
 		y = 0;
@@ -226,10 +278,13 @@ void RandomRoot(int difficultLevel)
 
 int main()
 {
-	RandomRoot(5);
+	RandomRoot(100);
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
-	IterativeBFS();
+	visitedNodes.clear();
+	IterativeDFS();
+	visitedNodes.clear();
+	//IterativeBFS();
 	system("pause");
 	return 0;
 }
