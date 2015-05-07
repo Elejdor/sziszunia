@@ -18,28 +18,28 @@ struct byte2
 	}
 };
 
-
-
 struct Node
 {
 	byte2 whitePosition;
 	byte board[4][4];
 
-	inline bool operator ==(Node& a)
+
+};
+
+inline bool operator ==(Node const & const a, Node const & const b)
+{
+	for (byte i = 0; i < 4; i++)
 	{
-		for (byte i = 0; i < 4; i++)
+		for (byte j = 0; j < 4; j++)
 		{
-			for (byte j = 0; j < 4; j++)
+			if (a.board[i][j] != b.board[i][j])
 			{
-				if (this->board[i][j] != a.board[i][j])
-				{
-					return false;
-				}
+				return false;
 			}
 		}
-		return true;
 	}
-};
+	return true;
+}
 
 std::vector<Node> visitedNodes;
 
@@ -51,7 +51,8 @@ Node graph = {
 	12, 13, 14, 15
 };
 
-byte solved[4][4] = {
+Node solved = {
+	0,0,
 	0, 1, 2, 3,
 	4, 5, 6, 7,
 	8, 9, 10, 11,
@@ -70,16 +71,17 @@ inline bool FieldExists(byte2 position)
 	return true;
 }
 
-inline Node MoveZeroFromTo(byte2 to, Node* graph)
+inline Node* MoveZeroFromTo(byte2 to, Node* const graph)
 {
-	Node result = *graph; //make a copy
-	result.board[graph->whitePosition.y][graph->whitePosition.x] = result.board[to.y][to.x];
-	result.board[to.y][to.x] = 0;
-	result.whitePosition = to;
+	Node* result = new Node(); //make a copy
+	memcpy(result, graph, sizeof(Node));
+	result->board[result->whitePosition.y][result->whitePosition.x] = result->board[to.y][to.x];
+	result->board[to.y][to.x] = 0;
+	result->whitePosition = to;
 	return result;
 }
 
-inline byte2 CalculateWhitePosition(Node* node)
+inline byte2 CalculateWhitePosition(const Node* node)
 {
 	for (byte i = 0; i < 4; i++)
 	{
@@ -92,8 +94,8 @@ inline byte2 CalculateWhitePosition(Node* node)
 }
 void IterativeBFS()
 {
-	std::queue<Node> queue;
-	queue.push(graph);
+	std::queue<Node*> queue;
+	queue.push(&graph);
 
 	Node* current;
 	byte2 currentPosition;
@@ -104,7 +106,7 @@ void IterativeBFS()
 
 	while (!queue.empty())
 	{
-		current = &queue.front();
+		current = queue.front();
 		queue.pop();
 
 		visited = false;
@@ -117,7 +119,6 @@ void IterativeBFS()
 				visited = true;
 				break;
 			}
-
 		}
 
 		if (visited)
@@ -125,15 +126,15 @@ void IterativeBFS()
 
 		visitedNodes.push_back(*current);
 
-		if (current->board == solved)
+		if (*current == solved)
 		{
 			break;
 		}
 
 		currentPosition = current->whitePosition;
 		newPosition = current->whitePosition;
-		newPosition.x += 1;
 
+		newPosition.x += 1;
 		if (FieldExists(newPosition))
 		{
 			queue.push(MoveZeroFromTo(newPosition, current));
@@ -157,14 +158,16 @@ void IterativeBFS()
 		{
 			queue.push(MoveZeroFromTo(newPosition, current));
 		}
+
+		++depth;
 	}
 
-	printf("%i", depth);
+	printf("%i\n", depth);
 }
 
 int main()
 {
-	//IterativeBFS();
+	IterativeBFS();
 	system("pause");
 	return 0;
 }
