@@ -1,8 +1,13 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <unordered_map>
+#include <thread>
+#include "HRTimer.h"
+#include <mmintrin.h>
+#include <xmmintrin.h>
 
-typedef char byte;
+//typedef char byte;
 
 struct byte2
 {
@@ -18,12 +23,11 @@ struct byte2
 	}
 };
 
+_declspec(align(16))
 struct Node
 {
-	byte2 whitePosition;
 	byte board[4][4];
-
-
+	byte2 whitePosition;
 };
 
 inline bool operator ==(Node const & const a, Node const & const b)
@@ -44,19 +48,19 @@ inline bool operator ==(Node const & const a, Node const & const b)
 std::vector<Node> visitedNodes;
 
 Node graph = {
-	0, 0,
 	0, 1, 2, 3,
 	4, 5, 6, 7,
 	8, 9, 10, 11,
-	12, 13, 14, 15
+	12, 13, 14, 15,
+	0, 0
 };
 
 Node solved = {
-	0,0,
 	0, 1, 2, 3,
 	4, 5, 6, 7,
 	8, 9, 10, 11,
-	12, 13, 14, 15
+	12, 13, 14, 15,
+	0, 0
 };
 
 void IterativeDFS()
@@ -64,14 +68,14 @@ void IterativeDFS()
 
 }
 
-inline bool FieldExists(byte2 position)
+inline bool FieldExists(byte2 & const position)
 {
-	if (position.x == -1 | position.x == 4 | position.y == -1 | position.y == 4)
+	if (position.x == 255 | position.x == 4 | position.y == 255 | position.y == 4)
 		return false;
 	return true;
 }
 
-inline Node* MoveZeroFromTo(byte2 to, Node* const graph)
+inline Node* MoveZeroFromTo(byte2 & const to, Node* const graph)
 {
 	Node* result = new Node(); //make a copy
 	memcpy(result, graph, sizeof(Node));
@@ -92,27 +96,44 @@ inline byte2 CalculateWhitePosition(const Node* node)
 		}
 	}
 }
+
+#pragma region BFS
+std::queue<Node*> bfsQueue;
+
+_declspec(align(16))
+typedef struct NodePair
+{
+	Node* key;
+	Node* value;
+};
+
+std::vector<NodePair*> paths2;
+
 void IterativeBFS()
 {
-	std::queue<Node*> queue;
-	queue.push(&graph);
-
-	Node* current;
+	HRTimer timer;
+	
+	bfsQueue.push(&graph);
+	
+	Node* current = nullptr;
 	byte2 currentPosition;
 	byte2 newPosition;
 	short visitedSize;
 	bool visited;
 	int depth = 0;
+	//Node* tmp;
 
-	while (!queue.empty())
+	timer.Start();
+	while (!bfsQueue.empty())
 	{
-		current = queue.front();
-		queue.pop();
+		
+		current = bfsQueue.front();
+		bfsQueue.pop();
 
 		visited = false;
 		visitedSize = visitedNodes.size();
 
-		for (short i = 0; i < visitedSize; i++)
+		for (short i = 0; i < visitedSize; ++i)
 		{
 			if (visitedNodes[i] == *current)
 			{
@@ -127,43 +148,63 @@ void IterativeBFS()
 		visitedNodes.push_back(*current);
 
 		if (*current == solved)
-		{
 			break;
-		}
 
 		currentPosition = current->whitePosition;
 		newPosition = current->whitePosition;
 
-		newPosition.x += 1;
+		++newPosition.x;
 		if (FieldExists(newPosition))
 		{
-			queue.push(MoveZeroFromTo(newPosition, current));
+			//tmp = ;
+			bfsQueue.push(MoveZeroFromTo(newPosition, current));
+			paths2.push_back(new NodePair{ bfsQueue.back(), current });
 		}
 
 		newPosition.x -= 2;
 		if (FieldExists(newPosition))
 		{
-			queue.push(MoveZeroFromTo(newPosition, current));
+			bfsQueue.push(MoveZeroFromTo(newPosition, current));
+			paths2.push_back(new NodePair{ bfsQueue.back(), current });
 		}
 
-		newPosition.x = currentPosition.x;
+		++newPosition.x;
 		newPosition.y += 1;
 		if (FieldExists(newPosition))
 		{
-			queue.push(MoveZeroFromTo(newPosition, current));
+			bfsQueue.push(MoveZeroFromTo(newPosition, current));
+			paths2.push_back(new NodePair{ bfsQueue.back(), current });
 		}
 
 		newPosition.y -= 2;
 		if (FieldExists(newPosition))
 		{
-			queue.push(MoveZeroFromTo(newPosition, current));
+			bfsQueue.push(MoveZeroFromTo(newPosition, current));
+			paths2.push_back(new NodePair{ bfsQueue.back(), current });
 		}
+	}
+	timer.Stop();
 
-		++depth;
+	std::vector<Node*> path;
+	int pathsSize = paths2.size();
+	while (!(*current == graph))
+	{
+		for (int i = 0; i < pathsSize; i++)
+		{
+			if (paths2[i]->key == current)
+			{
+				path.push_back(paths2[i]->value);
+				current = paths2[i]->value;
+				break;
+			}
+		}
 	}
 
-	printf("%i\n", depth);
+	paths2.clear();
+
+	printf("BFS \nPath length: %i\nTime: %i\n\n", path.size(), timer.ElapsedTime());
 }
+#pragma endregion
 
 void RandomRoot(int difficultLevel)
 {
@@ -226,7 +267,7 @@ void RandomRoot(int difficultLevel)
 
 int main()
 {
-	RandomRoot(5);
+	RandomRoot(14);
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	IterativeBFS();
