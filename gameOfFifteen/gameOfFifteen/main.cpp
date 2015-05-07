@@ -226,6 +226,9 @@ void RandomRoot(int difficultLevel)
 
 int main()
 {
+	RandomRoot(5);
+	graph.whitePosition = CalculateWhitePosition(&graph);
+
 	IterativeBFS();
 	system("pause");
 	return 0;
