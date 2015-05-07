@@ -44,8 +44,8 @@ struct Node
 std::vector<Node> visitedNodes;
 
 Node graph = {
-	2, 0,
-	1, 2, 0, 3,
+	0, 0,
+	0, 1, 2, 3,
 	4, 5, 6, 7,
 	8, 9, 10, 11,
 	12, 13, 14, 15
@@ -194,27 +194,27 @@ void RandomRoot(int difficultLevel)
 		byte tmp;
 		switch (move){
 		case (1 << 0) :
-			tmp = root.board[x - 1][y];
-			root.board[x - 1][y] = root.board[x][y];
-			root.board[x][y] = tmp;
+			tmp = graph.board[x - 1][y];
+			graph.board[x - 1][y] = graph.board[x][y];
+			graph.board[x][y] = tmp;
 			--x;
 			break;
 		case (1 << 1):
-			tmp = root.board[x][y - 1];
-			root.board[x][y - 1] = root.board[x][y];
-			root.board[x][y] = tmp;
+			tmp = graph.board[x][y - 1];
+			graph.board[x][y - 1] = graph.board[x][y];
+			graph.board[x][y] = tmp;
 			--y;
 			break;
 		case (1 << 2):
-			tmp = root.board[x + 1][y];
-			root.board[x + 1][y] = root.board[x][y];
-			root.board[x][y] = tmp;
+			tmp = graph.board[x + 1][y];
+			graph.board[x + 1][y] = graph.board[x][y];
+			graph.board[x][y] = tmp;
 			++x;
 			break;
 		case (1 << 3):
-			tmp = root.board[x][y + 1];
-			root.board[x][y + 1] = root.board[x][y];
-			root.board[x][y] = tmp;
+			tmp = graph.board[x][y + 1];
+			graph.board[x][y + 1] = graph.board[x][y];
+			graph.board[x][y] = tmp;
 			++y;
 			break;
 		}
