@@ -93,19 +93,13 @@ inline byte2 CalculateWhitePosition(const Node* node)
 	}
 }
 
+<<<<<<< HEAD
 #pragma region BFS
 std::queue<Node*> bfsQueue;
 
 _declspec(align(16))
 typedef struct NodePair
-{
-	Node* key;
-	Node* value;
-};
-
-std::vector<NodePair*> paths2;
-
-
+=======
 void IterativeDFS()
 {
 	std::stack<Node*> stack;
@@ -160,6 +154,15 @@ void IterativeDFS()
 		}
 	}
 }
+
+void IterativeBFS()
+>>>>>>> f5d76c0cd474a3121d753f5da76d75f129c1bbfe
+{
+	Node* key;
+	Node* value;
+};
+
+std::vector<NodePair*> paths2;
 
 void IterativeBFS()
 {
@@ -319,7 +322,11 @@ void RandomRoot( const int& const difficultLevel)
 
 int main()
 {
+<<<<<<< HEAD
 	RandomRoot(14);
+=======
+	RandomRoot(100);
+>>>>>>> f5d76c0cd474a3121d753f5da76d75f129c1bbfe
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	visitedNodes.clear();
