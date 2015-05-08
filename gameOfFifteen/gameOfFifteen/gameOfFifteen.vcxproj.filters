@@ -21,15 +21,9 @@
     <ClCompile Include="HRTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AlignmentAllocator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HRTimer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AlignmentAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

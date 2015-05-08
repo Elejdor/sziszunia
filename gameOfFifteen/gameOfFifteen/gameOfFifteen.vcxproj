@@ -66,12 +66,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AlignmentAllocator.cpp" />
     <ClCompile Include="HRTimer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AlignmentAllocator.h" />
     <ClInclude Include="HRTimer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

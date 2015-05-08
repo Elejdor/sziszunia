@@ -24,6 +24,7 @@
 *.exe
 *.out
 *.app
+
 gameOfFifteen/Debug/
 gameOfFifteen/gameOfFifteen/Debug/
 gameOfFifteen/Release/

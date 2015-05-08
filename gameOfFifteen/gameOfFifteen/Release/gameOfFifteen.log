@@ -1,27 +1,26 @@
-﻿Build started 5/8/2015 3:08:08 AM.
-     1>Project "C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-05-08 08:30:44.
+     1>Project "E:\Projects\VS\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W2 /WX- /sdl /O1 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>main.cpp(17): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>main.cpp(31): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>main.cpp(38): warning C4091: 'typedef ' : ignored on left of 'float2' when no variable is declared
-     1>main.cpp(52): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>main.cpp(87): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>main.cpp(94): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>main.cpp(181): warning C4091: 'typedef ' : ignored on left of 'NodePair' when no variable is declared
-     1>main.cpp(191): warning C4091: 'typedef ' : ignored on left of 'IntrinInt' when no variable is declared
-     1>main.cpp(312): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(16): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(30): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(37): warning C4091: 'typedef ' : ignored on left of 'float2' when no variable is declared
+     1>main.cpp(51): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(86): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(93): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(180): warning C4091: 'typedef ' : ignored on left of 'NodePair' when no variable is declared
+     1>main.cpp(190): warning C4091: 'typedef ' : ignored on left of 'IntrinInt' when no variable is declared
+     1>main.cpp(311): warning C4227: anachronism used : qualifiers on reference are ignored
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\Release\gameOfFifteen.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\Release\gameOfFifteen.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\Release\gameOfFifteen.lib" /MACHINE:X86 /SAFESEH Release\AlignmentAllocator.obj
-         Release\HRTimer.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Projects\VS\sziszunia\gameOfFifteen\Release\gameOfFifteen.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Projects\VS\sziszunia\gameOfFifteen\Release\gameOfFifteen.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Projects\VS\sziszunia\gameOfFifteen\Release\gameOfFifteen.lib" /MACHINE:X86 /SAFESEH Release\HRTimer.obj
          Release\main.obj
          Generating code
-     1>c:\users\wolfgd\documents\visual studio 2013\projects\sziszunia\gameoffifteen\gameoffifteen\main.cpp(114): warning C4715: 'CalculateWhitePosition' : not all control paths return a value
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\main.cpp(113): warning C4715: 'CalculateWhitePosition' : not all control paths return a value
          Finished generating code
-         gameOfFifteen.vcxproj -> C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\Release\gameOfFifteen.exe
-     1>Done Building Project "C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" (Build target(s)).
+         gameOfFifteen.vcxproj -> E:\Projects\VS\sziszunia\gameOfFifteen\Release\gameOfFifteen.exe
+     1>Done Building Project "E:\Projects\VS\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.64
+Time Elapsed 00:00:00.96

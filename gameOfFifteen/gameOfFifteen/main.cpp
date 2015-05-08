@@ -5,7 +5,6 @@
 #include <thread>
 #include "HRTimer.h"
 #include <emmintrin.h>
-#include "AlignmentAllocator.h"
 //typedef char byte;
 
 __declspec(align(16))
@@ -65,7 +64,7 @@ inline bool operator ==(Node const & const a, Node const & const b)
 }
 
 
-std::vector<Node, AlignmentAllocator<Node, 16>> visitedNodes;
+std::vector<Node> visitedNodes;
 
 Node graph = {
 	0, 1, 2, 3,
@@ -195,7 +194,7 @@ std::vector<NodePair*> paths2;
 #define USE_INTRINSINCS_no
 void IterativeBFS()
 {
-	//HRTimer timer;
+	HRTimer timer;
 	
 	bfsQueue.push(&graph);
 	
@@ -208,7 +207,7 @@ void IterativeBFS()
 	int depth = 0;
 	IntrinInt* ress = (IntrinInt*)_aligned_malloc(sizeof(IntrinInt), 16);
 	 
-	//timer.Start();
+	timer.Start();
 	while (!bfsQueue.empty())
 	{
 		
@@ -286,7 +285,7 @@ void IterativeBFS()
 			paths2.push_back(new NodePair{ bfsQueue.back(), current });
 		}
 	}
-	//timer.Stop();
+	timer.Stop();
 
 	std::vector<Node*> path;
 	int pathsSize = paths2.size();
@@ -305,7 +304,7 @@ void IterativeBFS()
 
 	paths2.clear();
 
-	//printf("BFS \nPath length: %i\nTime: %i\n\n", path.size(), timer.ElapsedTime());
+	printf("BFS \nPath length: %i\nTime: %i\n\n", path.size(), timer.ElapsedTime());
 }
 #pragma endregion
 
