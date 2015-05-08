@@ -4,11 +4,11 @@
 #include <unordered_map>
 #include <thread>
 #include "HRTimer.h"
-#include <mmintrin.h>
-#include <xmmintrin.h>
-
+#include <emmintrin.h>
+#include "AlignmentAllocator.h"
 //typedef char byte;
 
+__declspec(align(16))
 struct byte2
 {
 	byte x;
@@ -23,10 +23,29 @@ struct byte2
 	}
 };
 
+__declspec(align(16))
+typedef struct float2
+{
+	float x, y;
+
+	inline float2* operator +=(float2 & const a)
+	{
+		this->x += a.x;
+		this->y += a.y;
+
+		return this;
+	}
+};
+
 _declspec(align(16))
 struct Node
 {
-	byte board[4][4];
+	union
+	{
+		byte board[4][4];
+		__m128i m128i;
+	};
+
 	byte2 whitePosition;
 };
 
@@ -45,7 +64,8 @@ inline bool operator ==(Node const & const a, Node const & const b)
 	return true;
 }
 
-std::vector<Node> visitedNodes;
+
+std::vector<Node, AlignmentAllocator<Node, 16>> visitedNodes;
 
 Node graph = {
 	0, 1, 2, 3,
@@ -93,17 +113,6 @@ inline byte2 CalculateWhitePosition(const Node* node)
 	}
 }
 
-#pragma region BFS
-std::queue<Node*> bfsQueue;
-
-_declspec(align(16))
-typedef struct NodePair
-{
-	Node* key;
-	Node* value;
-};
-
-std::vector<NodePair*> paths2;
 
 
 void IterativeDFS()
@@ -161,21 +170,45 @@ void IterativeDFS()
 	}
 }
 
+#pragma region BFS
+std::queue<Node*> bfsQueue;
+
+_declspec(align(16))
+typedef struct NodePair
+{
+	Node* key;
+	Node* value;
+};
+
+_declspec(align(16))
+typedef struct IntrinInt
+{
+	union
+	{
+		__m128i m128i;
+		int values[4];
+	};
+};
+
+std::vector<NodePair*> paths2;
+
+#define USE_INTRINSINCS_no
 void IterativeBFS()
 {
-	HRTimer timer;
+	//HRTimer timer;
 	
 	bfsQueue.push(&graph);
 	
-	Node* current = nullptr;
+	Node* current = new Node();
 	byte2 currentPosition;
 	byte2 newPosition;
+
 	short visitedSize;
 	bool visited;
 	int depth = 0;
-	//Node* tmp;
-
-	timer.Start();
+	IntrinInt* ress = (IntrinInt*)_aligned_malloc(sizeof(IntrinInt), 16);
+	 
+	//timer.Start();
 	while (!bfsQueue.empty())
 	{
 		
@@ -185,23 +218,41 @@ void IterativeBFS()
 		visited = false;
 		visitedSize = visitedNodes.size();
 
-		for (short i = 0; i < visitedSize; ++i)
+		for (int i = 0; i < visitedSize; ++i)
 		{
+#ifdef USE_INTRINSINCS
+			_mm_store_si128(&ress->m128i, _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i));
+			if (ress->values[0] == 0)
+				break;
+			if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+			{
+				visited = true;
+				break;
+			}
+#else
 			if (visitedNodes[i] == *current)
 			{
 				visited = true;
 				break;
 			}
+#endif
 		}
 
 		if (visited)
 			continue;
 
 		visitedNodes.push_back(*current);
-
+		
+#ifdef USE_INTRINSINCS
+		ress->m128i = _mm_cmpeq_epi8(current->m128i, solved.m128i);
+		if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+		{
+			break;
+		}
+#else
 		if (*current == solved)
 			break;
-
+#endif
 		currentPosition = current->whitePosition;
 		newPosition = current->whitePosition;
 
@@ -235,7 +286,7 @@ void IterativeBFS()
 			paths2.push_back(new NodePair{ bfsQueue.back(), current });
 		}
 	}
-	timer.Stop();
+	//timer.Stop();
 
 	std::vector<Node*> path;
 	int pathsSize = paths2.size();
@@ -254,7 +305,7 @@ void IterativeBFS()
 
 	paths2.clear();
 
-	printf("BFS \nPath length: %i\nTime: %i\n\n", path.size(), timer.ElapsedTime());
+	//printf("BFS \nPath length: %i\nTime: %i\n\n", path.size(), timer.ElapsedTime());
 }
 #pragma endregion
 
@@ -319,13 +370,13 @@ void RandomRoot( const int& const difficultLevel)
 
 int main()
 {
-	RandomRoot(14);
+	RandomRoot(10);
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	visitedNodes.clear();
-	IterativeDFS();
+	//IterativeDFS();
 	visitedNodes.clear();
-	//IterativeBFS();
+	IterativeBFS();
 	system("pause");
 	return 0;
 }
