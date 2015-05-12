@@ -139,7 +139,10 @@ void IterativeDFS()
 	unsigned int depth = 0u;
 
 	byte2 zero_position;
-
+	size_t size;
+	bool visited;
+	Node* current;
+	byte2 test_position;
 #ifdef USE_INTRINSINCS
 	IntrinInt* ress = (IntrinInt*)_aligned_malloc(sizeof(IntrinInt), 16);
 #endif
@@ -147,7 +150,7 @@ void IterativeDFS()
 	timer.Start();
 	while (!stack.empty())
 	{
-		Node* current = stack.top();
+		current = stack.top();
 		stack.pop();
 
 #ifdef USE_INTRINSINCS
@@ -165,9 +168,9 @@ void IterativeDFS()
 		zero_position = CalculateWhitePosition(current);
 
 #ifdef USE_INTRINSINCS
-		unsigned int size = visitedNodes.size();
-		bool visited = true;
-		for (unsigned int i = 0; i < size; ++i)
+		size = visitedNodes.size();
+		visited = true;
+		for (size_t i = 0; i < size; ++i)
 		{
 			ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
 			if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
@@ -182,8 +185,6 @@ void IterativeDFS()
 #endif
 		{
 			visitedNodes.push_back(*current);
-
-			byte2 test_position;
 
 			test_position = zero_position;
 			++test_position.x;
