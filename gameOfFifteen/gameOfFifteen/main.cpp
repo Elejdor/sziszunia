@@ -111,31 +111,75 @@ inline byte2 CalculateWhitePosition(const Node* node)
 		}
 	}
 }
+void PrintNode(Node* n)
+{
+	printf("%i %i %i %i\n", n->board[0][0], n->board[0][1], n->board[0][2], n->board[0][3]);
+	printf("%i %i %i %i\n", n->board[1][0], n->board[1][1], n->board[1][2], n->board[1][3]);
+	printf("%i %i %i %i\n", n->board[2][0], n->board[2][1], n->board[2][2], n->board[2][3]);
+	printf("%i %i %i %i\n\n", n->board[3][0], n->board[3][1], n->board[3][2], n->board[3][3]);
+}
 
+_declspec(align(16))
+typedef struct IntrinInt
+{
+	union
+	{
+		__m128i m128i;
+		int values[4];
+	};
+};
 
-
+#define USE_INTRINSINCS
 void IterativeDFS()
 {
+	HRTimer timer;
+
 	std::stack<Node*> stack;
 	stack.push(&graph);
 	unsigned int depth = 0u;
 
 	byte2 zero_position;
 
+#ifdef USE_INTRINSINCS
+	IntrinInt* ress = (IntrinInt*)_aligned_malloc(sizeof(IntrinInt), 16);
+#endif
+
+	timer.Start();
 	while (!stack.empty())
 	{
 		Node* current = stack.top();
 		stack.pop();
+
+#ifdef USE_INTRINSINCS
+		ress->m128i = _mm_cmpeq_epi8(current->m128i, solved.m128i);
+		if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+#else
 		if (*current == solved)
+#endif
 		{
-			printf("DFS: %i\n", depth);
 			break;
 		}
 		else
 			++depth;
 
 		zero_position = CalculateWhitePosition(current);
+
+#ifdef USE_INTRINSINCS
+		unsigned int size = visitedNodes.size();
+		bool visited = true;
+		for (unsigned int i = 0; i < size; ++i)
+		{
+			ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
+			if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+			{
+				visited = false; 
+				break;
+			}
+		}
+		if(visited)
+#else
 		if (std::find(visitedNodes.begin(), visitedNodes.end(), *current) == visitedNodes.end())
+#endif
 		{
 			visitedNodes.push_back(*current);
 
@@ -162,11 +206,9 @@ void IterativeDFS()
 				stack.push(MoveZeroFromTo(test_position, current));
 
 		}
-		else
-		{
-			printf("hit\n");
-		}
 	}
+	timer.Stop();
+	printf("DFS \nPath length: %i\nTime: %i\n\n", depth, timer.ElapsedTime());
 }
 
 #pragma region BFS
@@ -179,19 +221,10 @@ typedef struct NodePair
 	Node* value;
 };
 
-_declspec(align(16))
-typedef struct IntrinInt
-{
-	union
-	{
-		__m128i m128i;
-		int values[4];
-	};
-};
+
 
 std::vector<NodePair*> paths2;
 
-#define USE_INTRINSINCS_no
 void IterativeBFS()
 {
 	HRTimer timer;
@@ -373,9 +406,9 @@ int main()
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	visitedNodes.clear();
-	//IterativeDFS();
-	visitedNodes.clear();
 	IterativeBFS();
+	visitedNodes.clear();
+	IterativeDFS();
 	system("pause");
 	return 0;
 }
