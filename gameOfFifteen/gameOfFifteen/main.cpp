@@ -71,7 +71,7 @@ void IterativeDFS()
 
 #ifdef USE_INTRINSINCS
 		ress->m128i = _mm_cmpeq_epi8(current->m128i, solved.m128i);
-		if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+		if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
 #else
 		if (*current == solved)
 #endif
@@ -89,7 +89,7 @@ void IterativeDFS()
 		for (size_t i = 0; i < size; ++i)
 		{
 			ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
-			if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+			if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
 			{
 				visited = false; 
 				break;
@@ -171,9 +171,9 @@ void IterativeBFS()
 		{
 #ifdef USE_INTRINSINCS
 			_mm_store_si128(&ress->m128i, _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i));
-			if (ress->values[0] == 0)
-				break;
-			if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+			//ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
+			
+			if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
 			{
 				visited = true;
 				break;
@@ -193,8 +193,9 @@ void IterativeBFS()
 		visitedNodes.push_back(*current);
 		
 #ifdef USE_INTRINSINCS
-		ress->m128i = _mm_cmpeq_epi8(current->m128i, solved.m128i);
-		if (ress->values[0] == -1 && ress->values[1] == -1 && ress->values[2] == -1 && ress->values[3] == -1)
+		//ress->m128i = _mm_cmpeq_epi8(current->m128i, solved.m128i);
+		_mm_store_si128(&ress->m128i, _mm_cmpeq_epi8(current->m128i, solved.m128i));
+		if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
 		{
 			break;
 		}
@@ -323,9 +324,10 @@ int main()
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	visitedNodes.clear();
-	IterativeBFS();
-	visitedNodes.clear();
 	IterativeDFS();
+	visitedNodes.clear();
+	IterativeBFS();
+
 	system("pause");
 	return 0;
 }
