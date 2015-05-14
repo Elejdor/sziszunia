@@ -1,68 +1,4 @@
-#include <vector>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <thread>
-#include "HRTimer.h"
-#include <emmintrin.h>
-//typedef char byte;
-
-__declspec(align(16))
-struct byte2
-{
-	byte x;
-	byte y;
-
-	inline byte2* operator +=(byte2 & const a)
-	{
-		this->x += a.x;
-		this->y += a.y;
-
-		return this;
-	}
-};
-
-__declspec(align(16))
-typedef struct float2
-{
-	float x, y;
-
-	inline float2* operator +=(float2 & const a)
-	{
-		this->x += a.x;
-		this->y += a.y;
-
-		return this;
-	}
-};
-
-_declspec(align(16))
-struct Node
-{
-	union
-	{
-		byte board[4][4];
-		__m128i m128i;
-	};
-
-	byte2 whitePosition;
-};
-
-inline bool operator ==(Node const & const a, Node const & const b)
-{
-	for (byte i = 0; i < 4; i++)
-	{
-		for (byte j = 0; j < 4; j++)
-		{
-			if (a.board[i][j] != b.board[i][j])
-			{
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
+#include "common.h"
 
 std::vector<Node> visitedNodes;
 
@@ -82,14 +18,6 @@ Node solved = {
 	0, 0
 };
 
-
-inline bool FieldExists(byte2 & const position)
-{
-	if (position.x == 255 | position.x == 4 | position.y == 255 | position.y == 4)
-		return false;
-	return true;
-}
-
 inline Node* MoveZeroFromTo(byte2 & const to, Node* const graph)
 {
 	Node* result = new Node(); //make a copy
@@ -100,17 +28,6 @@ inline Node* MoveZeroFromTo(byte2 & const to, Node* const graph)
 	return result;
 }
 
-inline byte2 CalculateWhitePosition(const Node* node)
-{
-	for (byte i = 0; i < 4; i++)
-	{
-		for (byte j = 0; j < 4; j++)
-		{
-			if (node->board[i][j] == 0)
-				return{ j, i };
-		}
-	}
-}
 void PrintNode(Node* n)
 {
 	printf("%i %i %i %i\n", n->board[0][0], n->board[0][1], n->board[0][2], n->board[0][3]);
@@ -129,7 +46,6 @@ typedef struct IntrinInt
 	};
 };
 
-#define USE_INTRINSINCS
 void IterativeDFS()
 {
 	HRTimer timer;
