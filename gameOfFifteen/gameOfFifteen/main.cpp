@@ -1,4 +1,5 @@
 #include "common.h"
+#include "VisitedCollection.h"
 
 std::vector<Node> visitedNodes;
 
@@ -321,12 +322,28 @@ void RandomRoot( const int& const difficultLevel)
 int main()
 {
 	RandomRoot(10);
-	graph.whitePosition = CalculateWhitePosition(&graph);
+	//graph.whitePosition = CalculateWhitePosition(&graph);
 
-	visitedNodes.clear();
-	IterativeDFS();
-	visitedNodes.clear();
-	IterativeBFS();
+	//visitedNodes.clear();
+	//IterativeDFS();
+	//visitedNodes.clear();
+	//IterativeBFS();
+	Node n1 = 
+	{
+		0, 1, 2, 3,
+		4, 5, 6, 7,
+		8, 9, 10, 11,
+		12, 13, 14, 15,
+		0, 0	
+	};
+
+	/*Chunk ch;
+	ch.Init(5);
+	ch.Add(&n1);*/
+	VisitedCollection vc;
+	vc.Add(&n1);
+	n1.board[0][0] = 5;
+	//printf("%i", ch.pData[0]->board[0][0]);
 
 	system("pause");
 	return 0;
