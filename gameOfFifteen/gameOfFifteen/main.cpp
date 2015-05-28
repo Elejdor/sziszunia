@@ -188,18 +188,17 @@ void IterativeBFS()
 	
 #ifdef USE_INTRINSINCS
 	visitedNodes.reserve(100000); //1.8 MB
-
+	paths2.reserve(200000);
 #endif // USE_INTRINSINCS
 
 	while (!bfsQueue.empty())
-	{
-		
+	{		
 		current = bfsQueue.front();
 		bfsQueue.pop();
 
 		visited = false;
 		visitedSize = visitedNodes.size();
-		
+
 		if (IsVisited(current))
 			continue;
 
@@ -216,10 +215,10 @@ void IterativeBFS()
 		if (*current == solved)
 			break;
 #endif
-		currentPosition = current->whitePosition;
-		newPosition = current->whitePosition;
+		currentPosition = newPosition = current->whitePosition;
 
 		++newPosition.x;
+
 		if (FieldExists(newPosition))
 		{
 			//tmp = ;
@@ -239,7 +238,7 @@ void IterativeBFS()
 		if (FieldExists(newPosition))
 		{
 			bfsQueue.push(MoveZeroFromTo(newPosition, current));
-			paths2.push_back(new NodePair{ bfsQueue.back(), current });
+			paths2.push_back(new NodePair{ bfsQueue.back(), current });			
 		}
 
 		newPosition.y -= 2;
@@ -248,6 +247,7 @@ void IterativeBFS()
 			bfsQueue.push(MoveZeroFromTo(newPosition, current));
 			paths2.push_back(new NodePair{ bfsQueue.back(), current });
 		}
+		
 	}
 	timer.Stop();
 
