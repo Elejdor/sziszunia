@@ -185,6 +185,11 @@ void IterativeBFS()
 	int depth = 0;
 	 
 	timer.Start();
+	
+#ifdef USE_INTRINSINCS
+	visitedNodes.reserve(100000); //1.8 MB
+
+#endif // USE_INTRINSINCS
 
 	while (!bfsQueue.empty())
 	{
@@ -328,7 +333,7 @@ void RandomRoot( const int& const difficultLevel)
 
 int main()
 {
-	RandomRoot(13);
+	RandomRoot(12);
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	//visitedNodes.clear();

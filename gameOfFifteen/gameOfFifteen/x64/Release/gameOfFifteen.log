@@ -1,4 +1,4 @@
-﻿Build started 5/29/2015 12:10:24 AM.
+﻿Build started 5/29/2015 12:34:55 AM.
      1>Project "C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /nologo /W1 /WX- /Ox /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt VisitedCollection.cpp common.cpp main.cpp
@@ -25,7 +25,7 @@
      1>main.cpp(23): warning C4227: anachronism used : qualifiers on reference are ignored
      1>main.cpp(49): warning C4091: 'typedef ' : ignored on left of 'IntrinInt' when no variable is declared
      1>main.cpp(141): warning C4091: 'typedef ' : ignored on left of 'NodePair' when no variable is declared
-     1>main.cpp(270): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(275): warning C4227: anachronism used : qualifiers on reference are ignored
          Generating Code...
      1>c:\users\wolfgd\documents\visual studio 2013\projects\sziszunia\gameoffifteen\gameoffifteen\common.cpp(28): warning C4715: 'CalculateWhitePosition' : not all control paths return a value
        Link:
@@ -38,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.19
+Time Elapsed 00:00:02.22
