@@ -1,5 +1,6 @@
 #include "common.h"
 #include "VisitedCollection.h"
+#include <thread>
 
 std::vector<Node> visitedNodes;
 
@@ -142,6 +143,32 @@ typedef struct NodePair
 
 
 std::vector<NodePair*> paths2;
+IntrinInt* ress = (IntrinInt*)_aligned_malloc(sizeof(IntrinInt), 16);
+
+bool IsVisited(Node* node)
+{
+	int visitedSize = visitedNodes.size();
+	
+	for (int i = 0; i < visitedSize; ++i)
+	{
+#ifdef USE_INTRINSINCS
+		_mm_store_si128(&ress->m128i, _mm_cmpeq_epi8(node->m128i, visitedNodes[i].m128i));
+		//ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
+
+		if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
+		{
+			return true;
+		}
+#else
+		if (visitedNodes[i] == *node)
+		{
+			return true;
+		}
+#endif
+	}
+	return false;
+}
+
 
 void IterativeBFS()
 {
@@ -156,9 +183,9 @@ void IterativeBFS()
 	short visitedSize;
 	bool visited;
 	int depth = 0;
-	IntrinInt* ress = (IntrinInt*)_aligned_malloc(sizeof(IntrinInt), 16);
 	 
 	timer.Start();
+
 	while (!bfsQueue.empty())
 	{
 		
@@ -167,28 +194,8 @@ void IterativeBFS()
 
 		visited = false;
 		visitedSize = visitedNodes.size();
-
-		for (int i = 0; i < visitedSize; ++i)
-		{
-#ifdef USE_INTRINSINCS
-			_mm_store_si128(&ress->m128i, _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i));
-			//ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
-			
-			if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
-			{
-				visited = true;
-				break;
-			}
-#else
-			if (visitedNodes[i] == *current)
-			{
-				visited = true;
-				break;
-			}
-#endif
-		}
-
-		if (visited)
+		
+		if (IsVisited(current))
 			continue;
 
 		visitedNodes.push_back(*current);
@@ -321,28 +328,28 @@ void RandomRoot( const int& const difficultLevel)
 
 int main()
 {
-	RandomRoot(10);
-	//graph.whitePosition = CalculateWhitePosition(&graph);
+	RandomRoot(13);
+	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	//visitedNodes.clear();
 	//IterativeDFS();
-	//visitedNodes.clear();
-	//IterativeBFS();
-	Node n1 = 
-	{
-		0, 1, 2, 3,
-		4, 5, 6, 7,
-		8, 9, 10, 11,
-		12, 13, 14, 15,
-		0, 0	
-	};
+	visitedNodes.clear();
+	IterativeBFS();
+	//Node n1 = 
+	//{
+	//	0, 1, 2, 3,
+	//	4, 5, 6, 7,
+	//	8, 9, 10, 11,
+	//	12, 13, 14, 15,
+	//	0, 0	
+	//};
 
 	/*Chunk ch;
 	ch.Init(5);
 	ch.Add(&n1);*/
-	VisitedCollection vc;
-	vc.Add(&n1);
-	n1.board[0][0] = 5;
+	//VisitedCollection vc;
+	//vc.Add(&n1);
+	//n1.board[0][0] = 5;
 	//printf("%i", ch.pData[0]->board[0][0]);
 
 	system("pause");
