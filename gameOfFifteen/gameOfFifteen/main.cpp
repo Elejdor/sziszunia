@@ -147,8 +147,59 @@ IntrinInt* ress = (IntrinInt*)_aligned_malloc(sizeof(IntrinInt), 16);
 
 bool IsVisited(Node* node)
 {
+#define visited1
+#ifdef visited1
+	std::vector<Node>::iterator iter = visitedNodes.begin();
+	std::vector<Node>::iterator endIter = visitedNodes.end();
+
+	std::vector<Node>::iterator result = std::find_if(iter, endIter, [&node](const Node& item) -> bool
+	{
+		_mm_store_si128(&ress->m128i, _mm_cmpeq_epi8(node->m128i, item.m128i));
+		//ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
+
+		if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	});
+
+	if (result == endIter)
+		return false;
+
+	return true;
+#endif
+
+#ifdef visited2
+	std::vector<Node>::iterator iter = visitedNodes.begin();
+	std::vector<Node>::iterator endIter = visitedNodes.end();
+
+	for (; iter != endIter; ++iter)
+	{
+#ifdef USE_INTRINSINCS
+		_mm_store_si128(&ress->m128i, _mm_cmpeq_epi8(node->m128i, iter->m128i));
+		//ress->m128i = _mm_cmpeq_epi8(current->m128i, visitedNodes[i].m128i);
+
+		if (ress->m128i.m128i_i64[0] == -1 && ress->m128i.m128i_i64[1] == -1)
+		{
+			return true;
+		}
+#else
+		if (visitedNodes[i] == *node)
+		{
+			return true;
+		}
+#endif
+	}
+	return false;
+#endif
+
+#ifdef visited3
 	int visitedSize = visitedNodes.size();
-	
+
 	for (int i = 0; i < visitedSize; ++i)
 	{
 #ifdef USE_INTRINSINCS
@@ -167,6 +218,7 @@ bool IsVisited(Node* node)
 #endif
 	}
 	return false;
+#endif
 }
 
 
@@ -333,7 +385,7 @@ void RandomRoot( const int& const difficultLevel)
 
 int main()
 {
-	RandomRoot(12);
+	RandomRoot(10);
 	graph.whitePosition = CalculateWhitePosition(&graph);
 
 	//visitedNodes.clear();
