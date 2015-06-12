@@ -1,0 +1,8 @@
+E:\Projects\VS\sziszunia\csThreading\csThreading\bin\Debug\csThreading.exe.config
+E:\Projects\VS\sziszunia\csThreading\csThreading\bin\Debug\csThreading.exe
+E:\Projects\VS\sziszunia\csThreading\csThreading\bin\Debug\csThreading.pdb
+E:\Projects\VS\sziszunia\csThreading\csThreading\bin\Debug\Microsoft.Xna.Framework.dll
+E:\Projects\VS\sziszunia\csThreading\csThreading\bin\Debug\Microsoft.Xna.Framework.xml
+E:\Projects\VS\sziszunia\csThreading\csThreading\obj\Debug\csThreading.csprojResolveAssemblyReference.cache
+E:\Projects\VS\sziszunia\csThreading\csThreading\obj\Debug\csThreading.exe
+E:\Projects\VS\sziszunia\csThreading\csThreading\obj\Debug\csThreading.pdb

@@ -77,20 +77,24 @@ namespace csThreading
             {
                 cullingAreas.Add(new BoundingBox(new Vector3(0, 0, 0), new Vector3(1, 1, 1)));
             }
-
-
+            
             threads = new Thread[noThreads];
+                        
+            for (int i = 0; i < noThreads; i++)
+            {
+                int j = i;
+                threads[i] = new Thread(() => CheckIntersectionAsync(mins[j], maxes[j], j));
 
-            threads[0] = new Thread(() => CheckIntersectionAsync(mins[0], maxes[0], 0));
-            threads[1] = new Thread(() => CheckIntersectionAsync(mins[1], maxes[1], 1));
-            threads[2] = new Thread(() => CheckIntersectionAsync(mins[2], maxes[2], 2));
-            threads[3] = new Thread(() => CheckIntersectionAsync(mins[3], maxes[3], 3));
-            threads[4] = new Thread(() => CheckIntersectionAsync(mins[4], maxes[4], 4));
-            threads[5] = new Thread(() => CheckIntersectionAsync(mins[5], maxes[5], 5));
-            threads[6] = new Thread(() => CheckIntersectionAsync(mins[6], maxes[6], 6));
-            threads[7] = new Thread(() => CheckIntersectionAsync(mins[7], maxes[7], 7));
-
-
+            }
+            //threads[0] = new Thread(() => CheckIntersectionAsync(mins[0], maxes[0], 0));
+            //threads[1] = new Thread(() => CheckIntersectionAsync(mins[1], maxes[1], 1));
+            //threads[2] = new Thread(() => CheckIntersectionAsync(mins[2], maxes[2], 2));
+            //threads[3] = new Thread(() => CheckIntersectionAsync(mins[3], maxes[3], 3));
+            //threads[4] = new Thread(() => CheckIntersectionAsync(mins[4], maxes[4], 4));
+            //threads[5] = new Thread(() => CheckIntersectionAsync(mins[5], maxes[5], 5));
+            //threads[6] = new Thread(() => CheckIntersectionAsync(mins[6], maxes[6], 6));
+            //threads[7] = new Thread(() => CheckIntersectionAsync(mins[7], maxes[7], 7));
+            
             for (int i = 0; i < noThreads; i++)
             {
                 threads[i].Start();
@@ -123,12 +127,10 @@ namespace csThreading
 
         public void CalculateVisibility()
         {
-            sync.ready.Wait();
             sync.safeToLeave.Reset();
             sync.startCulling.Set();
             sync.finnished.Wait();
             sync.finnished.Reset();
-            sync.ready.Reset();
             sync.startCulling.Reset();
             sync.safeToLeave.Set();
         }
@@ -137,7 +139,6 @@ namespace csThreading
         {
             while (!Cancel)
             {
-                sync.ready.Signal();
                 sync.startCulling.WaitOne();
                 int localTests = 0;
                 foreach (BoundingBox occluder in boundingBoxes[thread])

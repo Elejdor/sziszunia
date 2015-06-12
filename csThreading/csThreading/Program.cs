@@ -22,16 +22,16 @@ namespace csThreading
                 
             }
 
-            //stopwatch.Start();
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    //culling.CalculateVisibility();
-            //    culling.CheckIntersection(0, 999);
-            //}
+            stopwatch.Start();
+            for (int i = 0; i < 100; i++)
+            {
+                //culling.CalculateVisibility();
+                culling.CheckIntersection(0, 999);
+            }
 
-            //stopwatch.Stop();
-            //DisplayResult();
-            //stopwatch.Reset();
+            stopwatch.Stop();
+            DisplayResult();
+            stopwatch.Reset();
 
             stopwatch.Start();
             for (int i = 0; i < 100; i++)

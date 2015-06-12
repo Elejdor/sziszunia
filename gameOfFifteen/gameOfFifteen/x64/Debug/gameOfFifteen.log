@@ -1,25 +1,41 @@
-﻿Build started 5/29/2015 12:54:54 AM.
-     1>Project "C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-05-29 09:17:13.
+     1>Project "E:\Projects\VS\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W1 /WX- /O2 /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W1 /WX- /O2 /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt VisitedCollection.cpp common.cpp main.cpp
+         VisitedCollection.cpp
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(16): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(30): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(37): warning C4091: 'typedef ' : ignored on left of 'float2' when no variable is declared
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(51): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(53): warning C4227: anachronism used : qualifiers on reference are ignored
+         common.cpp
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(16): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(30): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(37): warning C4091: 'typedef ' : ignored on left of 'float2' when no variable is declared
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(51): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(53): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>common.cpp(3): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>common.cpp(30): warning C4227: anachronism used : qualifiers on reference are ignored
          main.cpp
-     1>c:\users\wolfgd\documents\visual studio 2013\projects\sziszunia\gameoffifteen\gameoffifteen\common.h(16): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>c:\users\wolfgd\documents\visual studio 2013\projects\sziszunia\gameoffifteen\gameoffifteen\common.h(30): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>c:\users\wolfgd\documents\visual studio 2013\projects\sziszunia\gameoffifteen\gameoffifteen\common.h(37): warning C4091: 'typedef ' : ignored on left of 'float2' when no variable is declared
-     1>c:\users\wolfgd\documents\visual studio 2013\projects\sziszunia\gameoffifteen\gameoffifteen\common.h(51): warning C4227: anachronism used : qualifiers on reference are ignored
-     1>c:\users\wolfgd\documents\visual studio 2013\projects\sziszunia\gameoffifteen\gameoffifteen\common.h(53): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(16): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(30): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(37): warning C4091: 'typedef ' : ignored on left of 'float2' when no variable is declared
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(51): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.h(53): warning C4227: anachronism used : qualifiers on reference are ignored
      1>main.cpp(23): warning C4227: anachronism used : qualifiers on reference are ignored
      1>main.cpp(49): warning C4091: 'typedef ' : ignored on left of 'IntrinInt' when no variable is declared
      1>main.cpp(141): warning C4091: 'typedef ' : ignored on left of 'NodePair' when no variable is declared
-     1>main.cpp(276): warning C4227: anachronism used : qualifiers on reference are ignored
+     1>main.cpp(275): warning C4227: anachronism used : qualifiers on reference are ignored
+         Generating Code...
+     1>e:\projects\vs\sziszunia\gameoffifteen\gameoffifteen\common.cpp(28): warning C4715: 'CalculateWhitePosition' : not all control paths return a value
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.lib" /MACHINE:X64 x64\Debug\common.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Projects\VS\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Projects\VS\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Projects\VS\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.lib" /MACHINE:X64 x64\Debug\common.obj
          x64\Debug\HRTimer.obj
          x64\Debug\main.obj
          x64\Debug\VisitedCollection.obj
-         gameOfFifteen.vcxproj -> C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.exe
-     1>Done Building Project "C:\Users\WolfGD\Documents\Visual Studio 2013\Projects\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" (Build target(s)).
+         gameOfFifteen.vcxproj -> E:\Projects\VS\sziszunia\gameOfFifteen\x64\Debug\gameOfFifteen.exe
+     1>Done Building Project "E:\Projects\VS\sziszunia\gameOfFifteen\gameOfFifteen\gameOfFifteen.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.22
+Time Elapsed 00:00:04.81
