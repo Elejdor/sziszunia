@@ -4,6 +4,16 @@
 
 HRTimer timer;
 
+bool operator ==(Data & const A, Data & const B)
+{
+	if (A.x == B.x &&
+		A.y == B.y &&
+		A.z == B.z &&
+		A.w == B.w)
+		return true;
+	return false;
+}
+
 std::vector<int>* const GenerateIArray(const u_int* const size)
 {
 	std::vector<int>* result = new std::vector<int>();
